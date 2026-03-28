@@ -17,6 +17,10 @@ const Watch = () => {
 
 useFacebookPixel()
 
+ useEffect(() => {
+    document.title = "Wristwatch Workshop | Ankiit Btra ";
+  }, []);
+
 
 
   const scrollToHero = () => {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; // Added useEffect
 import {
   CheckCircle,
   ArrowRight,
@@ -15,6 +15,10 @@ import { useFacebookPixel } from "@/hooks/usePIxelWatch";
 const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycby6O9cD_HsMp9Ws8QJmI2UtvCAmY1uyTDa7wgBfCnEJtSNH-L0GOoTiFMonqlcQZjxu/exec";
 
+/* 🔗 DATE & TIME & WHATSAPP CSV */
+const DATE_TIME_CSV =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSA1mZDhz4voyKH_izB4TrrAX2MXMc5Dm3AiGjuLftCweG8I_FY9Z1SZcTHwd_ymhP2LtrFPrU-feDX/pub?gid=18023713&single=true&output=csv";
+
 const books = [
   { title: 'Money Flow Mastery', desc: 'Paisa stable karne ke liye', image: '/3.png' },
   { title: 'Name Numerology Blueprint', desc: 'Naam ka power samajhne ke liye', image: '/4.png' },
@@ -30,6 +34,29 @@ export const OTOWatchPage = () => {
 
   const [choice, setChoice] = useState<'yes' | 'no' | null>(null);
   const [loading, setLoading] = useState(false);
+  const [whatsappLink, setWhatsappLink] = useState("https://go.viralvigyapan.com/watchf"); // Fallback link
+
+  /* =====================
+     FETCH WHATSAPP LINK FROM SHEET
+  ===================== */
+  useEffect(() => {
+    document.title = "Wristwatch Workshop | Ankiit Btra";
+    
+    fetch(DATE_TIME_CSV)
+      .then((res) => res.text())
+      .then((text) => {
+        const rows = text.split("\n");
+        if (rows.length > 1) {
+          const cols = rows[1].split(",");
+          // Index 2 is the 'watsapp_link' column from your image
+          const dynamicLink = cols[2]?.trim();
+          if (dynamicLink && dynamicLink.startsWith("http")) {
+            setWhatsappLink(dynamicLink);
+          }
+        }
+      })
+      .catch(() => console.error("Failed to fetch WhatsApp link from sheet"));
+  }, []);
 
   // Get data from Hero Page Redirect
   const params = new URLSearchParams(window.location.search);
@@ -54,7 +81,7 @@ export const OTOWatchPage = () => {
         age_range: ageRange,
         utm_source: utmSource,
         utm_campaign: "wristwatch_workshop",
-        utm_term: status, // "PAID_SELECTED" or "FREE_SKIP" in Column I
+        utm_term: status, 
         utm_content: "",
       });
 
@@ -87,7 +114,7 @@ export const OTOWatchPage = () => {
 
     if (choice === 'no') {
       await trackToSheet("free_skip");
-      window.location.href = 'https://go.viralvigyapan.com/watchf';
+      window.location.href = whatsappLink; // Dynamic link
     }
   };
 
@@ -101,18 +128,20 @@ export const OTOWatchPage = () => {
     <section className="min-h-screen bg-[#0b0b0b] py-10 md:py-20 text-white font-sans">
       <div className="container max-w-7xl mx-auto px-4">
         <div className="flex flex-col items-center mb-12">
-          <button
-            onClick={() => { setChoice('no'); handleContinue(); }}
-            disabled={loading}
+          <a
+            href={whatsappLink} // Dynamic link
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-3 bg-[#25D366] hover:bg-[#1ebd5b] text-white font-bold text-base md:text-lg rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(37,211,102,0.3)] disabled:opacity-70"
           >
-            {loading && choice === 'no' ? <Loader2 className="animate-spin h-5 w-5" /> : <MiniWhatsAppLogo />}
+            <MiniWhatsAppLogo />
             Join WhatsApp Group
-          </button>
+          </a>
           <p className="mt-3 text-red-600 font-bold text-[11px] md:text-sm text-center">Note: WhatsApp Group join karna mandatory hai.</p>
         </div>
 
         <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-12 items-start">
+          {/* LEFT CONTENT */}
           <div>
             <div className="inline-flex items-center gap-2 bg-[#1a1a1a] border border-[#d4af37]/30 rounded-full px-4 py-1 text-sm font-semibold text-[#d4af37] mb-5">
               <Sparkles className="h-4 w-4" /> Upgrade Option · Only ₹99 Today
@@ -155,6 +184,7 @@ export const OTOWatchPage = () => {
             </div>
           </div>
 
+          {/* RIGHT CHOICE BOX */}
           <div className="bg-white text-[#0b0b0b] rounded-3xl shadow-2xl p-6 md:p-8 sticky top-6">
             <p className="text-[10px] text-gray-500 text-center mb-1 uppercase tracking-widest font-bold">One last step</p>
             <h3 className="text-xl font-bold text-center mb-6 px-2">Choose Yes / No in this section</h3>
