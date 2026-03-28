@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'; // Added useEffect
+import { useState, useEffect } from 'react';
 import {
   CheckCircle,
   ArrowRight,
@@ -34,11 +34,8 @@ export const OTOWatchPage = () => {
 
   const [choice, setChoice] = useState<'yes' | 'no' | null>(null);
   const [loading, setLoading] = useState(false);
-  const [whatsappLink, setWhatsappLink] = useState("https://go.viralvigyapan.com/watchf"); // Fallback link
+  const [whatsappLink, setWhatsappLink] = useState("https://go.viralvigyapan.com/watchf");
 
-  /* =====================
-     FETCH WHATSAPP LINK FROM SHEET
-  ===================== */
   useEffect(() => {
     document.title = "Wristwatch Workshop | Ankiit Btra";
     
@@ -48,7 +45,6 @@ export const OTOWatchPage = () => {
         const rows = text.split("\n");
         if (rows.length > 1) {
           const cols = rows[1].split(",");
-          // Index 2 is the 'watsapp_link' column from your image
           const dynamicLink = cols[2]?.trim();
           if (dynamicLink && dynamicLink.startsWith("http")) {
             setWhatsappLink(dynamicLink);
@@ -58,7 +54,6 @@ export const OTOWatchPage = () => {
       .catch(() => console.error("Failed to fetch WhatsApp link from sheet"));
   }, []);
 
-  // Get data from Hero Page Redirect
   const params = new URLSearchParams(window.location.search);
   const fullName = params.get('full_name') || '';
   const email = params.get('email') || '';
@@ -68,9 +63,6 @@ export const OTOWatchPage = () => {
   const ageRange = params.get('age_range') || 'OTO_LEAD';
   const utmSource = params.get('utm_source') || 'facebook';
 
-  /* =====================
-     SEND CHOICE TO SHEET
-  ===================== */
   const trackToSheet = async (status: string) => {
     try {
       const body = new URLSearchParams({
@@ -95,12 +87,29 @@ export const OTOWatchPage = () => {
     }
   };
 
+  /* FIXED: Function for the top Join button to update sheet */
+  const handleTopJoin = async () => {
+    if (loading) return;
+    setLoading(true);
+    
+    // Treat top button click as skipping the offer (free_skip)
+    if (fullName || email || phone) {
+      await trackToSheet("free_skip");
+    }
+    window.location.href = whatsappLink;
+  };
+
   const handleContinue = async () => {
-    if (!choice) return;
+    if (!choice || loading) return; 
     setLoading(true);
 
+    const status = choice === 'yes' ? "paid_selected" : "free_skip";
+
+    if (fullName || email || phone) {
+        await trackToSheet(status);
+    }
+
     if (choice === 'yes') {
-      await trackToSheet("paid_selected");
       const razorpayBase = 'https://pages.razorpay.com/pl_S6a2oIr2Ld8yo0/view';
       const queryParams = new URLSearchParams({
         full_name: fullName,
@@ -110,11 +119,8 @@ export const OTOWatchPage = () => {
         course_name: 'Wrist Watch Workshop - FB',
       }).toString();
       window.location.href = `${razorpayBase}?${queryParams}`;
-    }
-
-    if (choice === 'no') {
-      await trackToSheet("free_skip");
-      window.location.href = whatsappLink; // Dynamic link
+    } else {
+      window.location.href = whatsappLink;
     }
   };
 
@@ -128,20 +134,23 @@ export const OTOWatchPage = () => {
     <section className="min-h-screen bg-[#0b0b0b] py-10 md:py-20 text-white font-sans">
       <div className="container max-w-7xl mx-auto px-4">
         <div className="flex flex-col items-center mb-12">
-          <a
-            href={whatsappLink} // Dynamic link
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* UPDATED: Changed from <a> to <button> to trigger lead update */}
+          <button
+            onClick={handleTopJoin}
+            disabled={loading}
             className="inline-flex items-center gap-2 px-8 py-3 bg-[#25D366] hover:bg-[#1ebd5b] text-white font-bold text-base md:text-lg rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(37,211,102,0.3)] disabled:opacity-70"
           >
-            <MiniWhatsAppLogo />
-            Join WhatsApp Group
-          </a>
+            {loading ? <Loader2 className="animate-spin h-5 w-5" /> : (
+              <>
+                <MiniWhatsAppLogo />
+                Join WhatsApp Group
+              </>
+            )}
+          </button>
           <p className="mt-3 text-red-600 font-bold text-[11px] md:text-sm text-center">Note: WhatsApp Group join karna mandatory hai.</p>
         </div>
 
         <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-12 items-start">
-          {/* LEFT CONTENT */}
           <div>
             <div className="inline-flex items-center gap-2 bg-[#1a1a1a] border border-[#d4af37]/30 rounded-full px-4 py-1 text-sm font-semibold text-[#d4af37] mb-5">
               <Sparkles className="h-4 w-4" /> Upgrade Option · Only ₹99 Today
@@ -184,7 +193,6 @@ export const OTOWatchPage = () => {
             </div>
           </div>
 
-          {/* RIGHT CHOICE BOX */}
           <div className="bg-white text-[#0b0b0b] rounded-3xl shadow-2xl p-6 md:p-8 sticky top-6">
             <p className="text-[10px] text-gray-500 text-center mb-1 uppercase tracking-widest font-bold">One last step</p>
             <h3 className="text-xl font-bold text-center mb-6 px-2">Choose Yes / No in this section</h3>
