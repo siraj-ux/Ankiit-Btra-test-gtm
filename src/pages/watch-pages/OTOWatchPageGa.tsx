@@ -46,7 +46,7 @@ export const OTOWatchPageGa = () => {
     }
 
     if (choice === 'no') {
-      window.location.href = 'https://go.viralvigyapan.com/watchf';
+      window.location.href = 'https://hi.switchy.io/hiswitchywatch';
     }
   };
 
@@ -63,7 +63,7 @@ export const OTOWatchPageGa = () => {
         {/* TOP WHATSAPP BUTTON WITH RED NOTE */}
         <div className="flex flex-col items-center mb-12">
           <a
-            href="https://go.viralvigyapan.com/watchf"
+            href="https://hi.switchy.io/hiswitchywatch"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-3 bg-[#25D366] hover:bg-[#1ebd5b] text-white font-bold text-base md:text-lg rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(37,211,102,0.3)]"

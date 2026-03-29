@@ -150,19 +150,19 @@ export const HeroSectionWatch = () => {
                 <Input label="Phone Number *" name="phone" value={form.phone} onChange={handleChange} />
                 <Select label="Age *" name="age_range" value={form.age_range} onChange={handleChange}>
                   <option value="">Select Age Range</option>
-                  <option>Below 18</option>
-                  <option>18-24</option>
-                  <option>25–34</option>
-                  <option>35–44</option>
-                  <option>45 & Above</option>
+                  <option value="below_18">Below 18</option>
+                  <option value="18_24">18-24</option>
+                  <option value="25_34">25–34</option>
+                  <option value="35_44">35–44</option>
+                  <option value="45_above">45 & Above</option>
                 </Select>
                 <Select label="Profession *" name="profession" value={form.profession} onChange={handleChange}>
                   <option value="">Select Profession</option>
-                  <option>Business Owner / Entrepreneur</option>
-                  <option>Working Professional (Job)</option>
-                  <option>Student</option>
-                  <option>Freelancer / Self-Employed</option>
-                  <option>Homemaker</option>
+                  <option value="business_owner">Business Owner / Entrepreneur</option>
+                  <option value="working_professional">Working Professional (Job)</option>
+                  <option value="student">Student</option>
+                  <option value="freelancer">Freelancer / Self-Employed</option>
+                  <option value="homemaker">Homemaker</option>
                 </Select>
                 <button
                   type="submit"

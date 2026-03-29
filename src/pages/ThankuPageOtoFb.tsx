@@ -49,7 +49,7 @@ export const ThankYouPageOtoFb = () => {
 
         {/* WhatsApp CTA */}
         <a
-          href="https://go.viralvigyapan.com/nnw"
+          href="https://hi.switchy.io/hiswitchynamennw"
           target="_blank"
           rel="noopener noreferrer"
           className="block"

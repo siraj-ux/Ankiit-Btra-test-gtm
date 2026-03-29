@@ -1,6 +1,6 @@
 import { CheckCircle, ArrowRight, MessageCircle, Calendar, Clock } from "lucide-react";
 
-const WHATSAPP_LINK = "https://go.viralvigyapan.com/watchf";
+const WHATSAPP_LINK = "https://hi.switchy.io/hiswitchywatch";
 
 export const ThankYouPageWatch = () => {
     

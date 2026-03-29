@@ -34,7 +34,7 @@ export const OTOWatchPage = () => {
 
   const [choice, setChoice] = useState<'yes' | 'no' | null>(null);
   const [loading, setLoading] = useState(false);
-  const [whatsappLink, setWhatsappLink] = useState("https://go.viralvigyapan.com/watchf");
+  const [whatsappLink, setWhatsappLink] = useState("https://hi.switchy.io/hiswitchywatch");
 
   useEffect(() => {
     document.title = "Wristwatch Workshop | Ankiit Btra";

@@ -59,7 +59,7 @@ export const OTOThankYouPageGa = () => {
           {/* WhatsApp CTA */}
           <div className="mt-6">
             <a
-              href="https://go.viralvigyapan.com/watchf"
+              href="https://hi.switchy.io/hiswitchywatch"
               target="_blank"
               rel="noopener noreferrer"
               className="
