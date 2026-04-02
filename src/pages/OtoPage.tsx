@@ -7,6 +7,8 @@ import { useFacebookPixel } from "@/hooks/useFacebookPixel";
 import { useRazorpay } from "@/hooks/useRazorpay"; 
 import AddToCartButton from "@/components/AddToCartButton"; 
 import { toast } from "sonner";
+import { PRODUCT1, PRODUCT1_OTO, RAZORPAY_DESCRIPTION, RAZORPAY_PRODUCT_NAME } from "@/utils/product-info";
+import { trackAddToCart, trackFormSubmit } from "@/utils/gtm";
 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyNqQghsxa10pLaJKRryPO0fs0-02M4diS9pJ2RwZVisD0KeN5q97BZehzijb1LBKLlRQ/exec";
 
@@ -130,14 +132,22 @@ export default function OtoPage() {
     setIsSubmitting(true);
     setFireAddToCart(true);
 
+    trackFormSubmit({
+      formData: {
+        ...formData,
+      }, formName: "OTO Form"
+      
+    });
+
     // Sync info to sheets before opening popup
     await sendToGoogleSheets();
-
+    const product = upgrade499 ? PRODUCT1_OTO : PRODUCT1 ; // Using OTO product for both since price is dynamic
+    trackAddToCart(product)
     // Trigger Razorpay Popup
     const result = await initiatePayment({
-      amount: upgrade499 ? 499 : 99,
-      productName: formData.courseName,
-      description: "Secure Workshop Enrollment",
+      amount: product.price,
+      productName: `Ankit Batra's Numerology Workshop`,
+      description: RAZORPAY_DESCRIPTION,
       prefill: {
         name: formData.name,
         email: formData.email,

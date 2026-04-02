@@ -1,20 +1,32 @@
 import { CheckCircle, ArrowRight, Users, Clock } from 'lucide-react';
 
 import { useFacebookPixel } from "@/hooks/usePIxelWatch";
+import { useEffect } from 'react';
 
-
+import { trackPurchase } from "@/utils/gtm";
+import { ORDER, OTO_OG_PRICE, PRODUCT1_OTO } from '@/utils/product-info';
 
 export const OTOThankYouPage = () => {
 
-   useFacebookPixel({
-       eventName: "OTO_Watch_99",
-       eventParams: {
-         content_name: "OTO_Product",
-         content_category: "OTO",
-         value: 99,
-         currency: "INR",
-       },
-     });
+  useEffect(() => {
+    trackPurchase({
+      ...ORDER,
+      value: OTO_OG_PRICE,
+      items: [
+        {...PRODUCT1_OTO}
+      ]
+    });
+
+    useFacebookPixel({
+      eventName: "OTO_Watch_99",
+      eventParams: {
+        content_name: "OTO_Product",
+        content_category: "OTO",
+        value: 99,
+        currency: "INR",
+      },
+    });
+  }, []);
 
   return (
     <section className="min-h-screen bg-[#0b0b0b] flex items-center justify-center px-4 text-white">

@@ -5,6 +5,10 @@ import { CountdownTimer } from "@/components/CountdownTimer";
 import { User, Mail, Phone, MapPin, Loader2, Calendar, Users } from "lucide-react";
 import { useUTMParams, buildRazorpayURL } from "@/hooks/useUTMParams";
 import { useFacebookPixel } from "@/hooks/useFacebookPixel";
+import { trackAddToCart, trackFormSubmit } from "@/utils/gtm";
+import { GA_PRODUCT1, GA_PRODUCT1_OTO, RAZORPAY_DESCRIPTION } from "@/utils/product-info";
+import { useRazorpay } from "@/hooks/useRazorpay";
+import { toast } from "@/components/ui/sonner";
 
 const RAZORPAY_99_URL = "https://pages.razorpay.com/pl_S6ZxgWS0ZZvgE2/view";
 const RAZORPAY_499_URL = "https://pages.razorpay.com/pl_S6aRnHuQsmGTB4/view";
@@ -50,7 +54,7 @@ export default function OtoPage() {
     gender: "",
     courseName: "Name Numerology NNW Workshop - FB1",
   });
-
+  const {initiatePayment, loading, error} = useRazorpay();
   const [errors, setErrors] = useState<FormErrors>({});
 
   useFacebookPixel(
@@ -117,30 +121,80 @@ export default function OtoPage() {
     }
   };
 
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
+
+    trackFormSubmit({
+          formData: {
+            ...formData,
+          }, formName: "OTO Form GA"
+          
+        });
 
     setIsSubmitting(true);
     setFireAddToCart(true);
 
     await sendToGoogleSheets();
 
-    let razorpayURL = buildRazorpayURL(
-      upgrade499 ? RAZORPAY_499_URL : RAZORPAY_99_URL,
-      formData,
-      utmParams
-    );
+    const product = upgrade499 ? GA_PRODUCT1_OTO : GA_PRODUCT1 ; // Using OTO product for both since price is dynamic
+    trackAddToCart(product)
+        // Trigger Razorpay Popup
+    const result = await initiatePayment({
+        amount: product.price,
+        productName: `Ankit Batra's Numerology Workshop`,
+        description: `${RAZORPAY_DESCRIPTION} from GA Page`,
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          contact: formData.phone,
+        },
+        notes: {
+          ...formData,
+          ...utmParams,
+          page_url: window.location.href,
+        }
+      });
 
-    const sep = razorpayURL.includes("?") ? "&" : "?";
-    razorpayURL += `${sep}course_name=${encodeURIComponent(formData.courseName)}`;
+      if (result.status === "success") {
+      // ✅ SUCCESS REDIRECT LOGIC
+      const successParams = new URLSearchParams({
+        payment_id: result.paymentId || "",
+        ...utmParams as any
+      });
 
-    if (upgrade499) {
-      if (formData.dob) razorpayURL += `&dob=${encodeURIComponent(formData.dob)}`;
-      if (formData.gender) razorpayURL += `&gender=${encodeURIComponent(formData.gender)}`;
+      // Redirect to specific page based on price
+      if (upgrade499) {
+        window.location.href = `/ty-oto-fb?${successParams.toString()}`;
+      } else {
+        window.location.href = `/ty-fb?${successParams.toString()}`;
+      }
+      
+    } else {
+      // Handle Failure or Cancel
+      if (result.error !== "Payment cancelled by user") {
+        toast.error(result.error || "Payment failed");
+      }
+      setIsSubmitting(false);
     }
 
-    window.location.href = razorpayURL;
+    // let razorpayURL = buildRazorpayURL(
+    //   upgrade499 ? RAZORPAY_499_URL : RAZORPAY_99_URL,
+    //   formData,
+    //   utmParams
+    // );
+
+    // const sep = razorpayURL.includes("?") ? "&" : "?";
+    // razorpayURL += `${sep}course_name=${encodeURIComponent(formData.courseName)}`;
+
+    // if (upgrade499) {
+    //   if (formData.dob) razorpayURL += `&dob=${encodeURIComponent(formData.dob)}`;
+    //   if (formData.gender) razorpayURL += `&gender=${encodeURIComponent(formData.gender)}`;
+    // }
+
+    // window.location.href = razorpayURL;
   };
 
   const handleChange = (field: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement>) => {

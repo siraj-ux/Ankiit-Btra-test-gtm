@@ -27,8 +27,8 @@ export const DISCOUNTED_PRICE_WATCH = 0;
 export const OTO_OG_PRICE_WATCH = 99;
 
 
-export const WEBINAR_NAME_1 = "Name Numerology NNW Workshop - FB1";
-export const WEBINAR_NAME_2 = "Wrist Watch Workshop - FB1";
+export const WEBINAR_NAME_1 = "Name Numerology NNW Workshop";
+export const WEBINAR_NAME_2 = "Wrist Watch Workshop";
 
 export const CURRENCY = "INR";
 export const CURRENCY_SYMBOL = "₹";
@@ -50,7 +50,7 @@ export const PRODUCT1_OTO : Product = {
     item_id : 'name_numerology_workshop_oto',
     item_name :  `${WEBINAR_NAME_1} OTO`,
     item_category : 'Online Workshop',
-    price : DISCOUNTED_PRICE,
+    price : OTO_OG_PRICE,
     quantity : 1,
     currency: CURRENCY,
 
@@ -77,7 +77,7 @@ export const PRODUCT2_OTO : Product = {
 }
 
 export const GA_PRODUCT1 : Product = {
-    item_id : 'wrist_watch_workshop_ga',
+    item_id : 'name_numerology_workshop_ga',
     item_name : `${WEBINAR_NAME_1} GA`,
     item_category : 'Online Workshop',
     price : DISCOUNTED_PRICE,
@@ -99,7 +99,7 @@ export const GA_PRODUCT2 : Product = {
 }
 
 export const GA_PRODUCT1_OTO : Product = {
-    item_id : 'wrist_watch_workshop_ga_oto',
+    item_id : 'name_numerology_workshop_ga_oto',
     item_name : `${WEBINAR_NAME_1} GA OTO`,
     item_category : 'Online Workshop',
     price : OTO_OG_PRICE,

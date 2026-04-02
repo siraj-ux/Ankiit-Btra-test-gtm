@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { useEffect } from 'react'; // ✅ Added useEffect
 import { useFacebookPixel } from "@/hooks/useFacebookPixel";
 import { trackPurchase } from "@/utils/gtm"; // ✅ Added GTM tracking
-import { ORDER } from "@/utils/product-info"; // ✅ Added Order info
+import { ORDER, OTO_OG_PRICE, PRODUCT1_OTO } from "@/utils/product-info"; // ✅ Added Order info
 
 export const ThankYouPageOtoFb = () => {
   /* 🔥 FACEBOOK PIXEL TRACKING (Value: 499) */
@@ -35,8 +35,11 @@ export const ThankYouPageOtoFb = () => {
 
     // 3. Fire GTM Event (Specifically for the 499 OTO)
     trackPurchase({
-      ...ORDER,
-      value: 499, // Explicitly set to 499 for this page
+          ...ORDER,
+          value: OTO_OG_PRICE,
+          items: [
+            {...PRODUCT1_OTO}
+          ],
       transaction_id: paymentId || `txn_oto_${Date.now()}`,
     });
   }, []);

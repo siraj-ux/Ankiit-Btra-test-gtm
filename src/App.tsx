@@ -27,22 +27,12 @@ import { usePageViewGTM } from "./hooks/use-pageview-gtm";
 
 const queryClient = new QueryClient();
 
-const GTMTracker = () => {
-  usePageViewGTM();
-  return null;
-};
-const App = () => {
+
+const AppRoutes = () => {
+  usePageViewGTM(); // ← hook goes here
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-
-        <BrowserRouter>
-          {/* ✅ FIX HERE */}
-          <GTMTracker />
-
-          <Routes>
+    <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/oto-fb" element={<OtoPage />} />
             <Route path="/ty-fb" element={<ThankYouPage />} />
@@ -65,7 +55,20 @@ const App = () => {
             <Route path="/oto-watch-ga-ty" element={<OTOThankYouPageGa />} />
 
             <Route path="*" element={<NotFound />} />
-          </Routes>
+        </Routes>
+  );
+};
+
+
+const App = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+
+        <BrowserRouter>
+          <AppRoutes />
         </BrowserRouter>
 
       </TooltipProvider>

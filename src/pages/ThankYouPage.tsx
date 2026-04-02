@@ -3,21 +3,23 @@ import { Button } from '@/components/ui/button';
 import { useEffect } from 'react';
 import { useFacebookPixel } from "@/hooks/useFacebookPixel";
 import { trackPurchase } from "@/utils/gtm";
-import { ORDER } from "@/utils/product-info";
+import { DISCOUNTED_PRICE, ORDER, OTO_OG_PRICE, PRODUCT1, PRODUCT1_OTO } from "@/utils/product-info";
 
 export const ThankYouPage = () => {
   /* 🔥 FACEBOOK PIXEL TRACKING */
-  useFacebookPixel({
-    eventName: "Purchase NNW",
-    eventParams: {
-      content_name: "LP2_Product",
-      content_category: "LP2_Offer",
-      content_ids: ["LP2_IN_99"],
-      content_type: "product",
-      value: 99,
-      currency: "INR",
-    },
-  });
+  
+
+    useFacebookPixel({
+      eventName: "Purchase NNW",
+      eventParams: {
+        content_name: "LP2_Product",
+        content_category: "LP2_Offer",
+        content_ids: ["LP2_IN_99"],
+        content_type: "product",
+        value: 99,
+        currency: "INR",
+      },
+    });
 
   /* ✅ GTM PURCHASE TRACKING (With Refresh Protection) */
   useEffect(() => {
@@ -36,6 +38,10 @@ export const ThankYouPage = () => {
     // 3. Fire GTM Purchase Event
     trackPurchase({
       ...ORDER,
+      value: DISCOUNTED_PRICE,
+      items: [
+        {...PRODUCT1}
+      ],
       transaction_id: paymentId || `txn_${Date.now()}`,
     });
   }, []);
