@@ -224,10 +224,10 @@ export default function OtoPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Main Contact Fields */}
           {[
-            { key: "name", icon: User, label: "Full Name", placeholder: "e.g. John Doe" },
-            { key: "email", icon: Mail, label: "Email Address", placeholder: "john@example.com", type: "email" },
-            { key: "phone", icon: Phone, label: "Phone Number", placeholder: "10-digit mobile number" },
-            { key: "city", icon: MapPin, label: "City", placeholder: "Your current city" },
+            { key: "name", icon: User, label: "Full Name", placeholder: "e.g. John Doe", name: "name" },
+            { key: "email", icon: Mail, label: "Email Address", placeholder: "john@example.com", type: "email", name:"email" },
+            { key: "phone", icon: Phone, label: "Phone Number", placeholder: "10-digit mobile number", type: "tel", name: "phone number" },
+            { key: "city", icon: MapPin, label: "City", placeholder: "Your current city", type: "text", name: "city"},
           ].map(({ key, icon: Icon, label, placeholder, type }) => (
             <div key={key} className="space-y-1">
               <label className="text-xs font-semibold text-gray-600 ml-1">{label}</label>

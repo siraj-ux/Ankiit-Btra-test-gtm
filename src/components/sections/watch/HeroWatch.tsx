@@ -160,9 +160,9 @@ export const HeroSectionWatch = () => {
             <div className="bg-white rounded-2xl p-6 md:p-8 shadow-2xl max-w-md w-full text-black" id="register">
               <h3 className="text-2xl font-bold text-center mb-6">Fill Your Details</h3>
               <form className="space-y-4" onSubmit={handleSubmit}>
-                <Input label="Full Name *" name="name" value={form.name} onChange={handleChange} />
-                <Input label="Email Address *" name="email" value={form.email} onChange={handleChange} />
-                <Input label="Phone Number *" name="phone" value={form.phone} onChange={handleChange} />
+                <Input label="Full Name *" name="name" type="text" value={form.name} onChange={handleChange} />
+                <Input label="Email Address *" name="email" type="email" value={form.email} onChange={handleChange} />
+                <Input label="Phone Number *" name="phone" type="tel" value={form.phone} onChange={handleChange} />
                 <Select label="Age *" name="age_range" value={form.age_range} onChange={handleChange}>
                   <option value="not_selected">Select Age Range</option>
                   <option value="below_18">Below 18</option>
@@ -222,11 +222,11 @@ const Detail = ({ icon, label, value }: { icon: React.ReactNode; label: string; 
   </div>
 );
 
-const Input = ({ label, name, value, onChange }: { label: string; name: string; value: string; onChange: React.ChangeEventHandler<HTMLInputElement>; }) => (
+const Input = ({ label, name, value, onChange, type}: { label: string; name: string; value: string; type: string; onChange: React.ChangeEventHandler<HTMLInputElement>; }) => (
   <div>
     <label className="text-sm font-semibold">{label}</label>
     <input
-      type="text"
+      type={type || "text"}
       name={name}
       value={value}
       onChange={onChange}

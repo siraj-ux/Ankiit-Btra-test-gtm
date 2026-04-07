@@ -211,7 +211,7 @@ export default function OtoPage() {
           {[
             { key: "name", icon: User, placeholder: "Full Name" },
             { key: "email", icon: Mail, placeholder: "Email Address", type: "email" },
-            { key: "phone", icon: Phone, placeholder: "Phone Number" },
+            { key: "phone", icon: Phone, placeholder: "Phone Number", type: "tel" },
             { key: "city", icon: MapPin, placeholder: "City" },
           ].map(({ key, icon: Icon, placeholder, type }) => (
             <div key={key} className="relative space-y-1">
