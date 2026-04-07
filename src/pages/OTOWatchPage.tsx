@@ -119,7 +119,7 @@ export const OTOWatchPage = () => {
 
     if (choice === 'yes') {
       const product = PRODUCT2_OTO;
-      
+      const workshop = `${WEBINAR_NAME_2} FB + 5 ebooks bundle`;
       // setFireAddToCart(true);
       trackAddToCart(product);
       trackFormSubmit({
@@ -146,7 +146,7 @@ export const OTOWatchPage = () => {
         notes: {
           ...utmParams,
           page_url: window.location.href,
-          webinar_name: WEBINAR_NAME_2,
+          workshop: workshop,
           payment_id : transactionId,
         }
       });

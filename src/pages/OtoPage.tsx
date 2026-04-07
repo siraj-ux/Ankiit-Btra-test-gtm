@@ -7,7 +7,7 @@ import { useFacebookPixel } from "@/hooks/useFacebookPixel";
 import { useRazorpay } from "@/hooks/useRazorpay"; 
 import AddToCartButton from "@/components/AddToCartButton"; 
 import { toast } from "sonner";
-import { PRODUCT1, PRODUCT1_OTO, RAZORPAY_DESCRIPTION, RAZORPAY_PRODUCT_NAME } from "@/utils/product-info";
+import { PRODUCT1, PRODUCT1_OTO, RAZORPAY_DESCRIPTION, RAZORPAY_PRODUCT_NAME, WEBINAR_NAME_1 } from "@/utils/product-info";
 import { trackAddToCart, trackFormSubmit } from "@/utils/gtm";
 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyNqQghsxa10pLaJKRryPO0fs0-02M4diS9pJ2RwZVisD0KeN5q97BZehzijb1LBKLlRQ/exec";
@@ -142,6 +142,7 @@ export default function OtoPage() {
     // Sync info to sheets before opening popup
     await sendToGoogleSheets();
     const product = upgrade499 ? PRODUCT1_OTO : PRODUCT1 ; // Using OTO product for both since price is dynamic
+    const workshopName = upgrade499 ? `${WEBINAR_NAME_1} FB + 5 Year Destiny Report` : `${WEBINAR_NAME_1} FB`;
     trackAddToCart(product)
     // Trigger Razorpay Popup
     const result = await initiatePayment({
@@ -157,6 +158,7 @@ export default function OtoPage() {
         ...formData,
         ...utmParams,
         page_url: window.location.href,
+        workshop: workshopName
       }
     });
 

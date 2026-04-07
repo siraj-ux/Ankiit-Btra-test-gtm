@@ -16,7 +16,8 @@ import {
   GA_PRODUCT2, 
   GA_PRODUCT2_OTO, 
   RAZORPAY_DESCRIPTION, 
-  RAZORPAY_PRODUCT_NAME 
+  RAZORPAY_PRODUCT_NAME, 
+  WEBINAR_NAME_2
 } from "@/utils/product-info";
 
 /* 🔗 APPS SCRIPT URL */
@@ -121,7 +122,7 @@ export const OTOWatchPageGa = () => {
       const product = GA_PRODUCT2_OTO;
       
       trackAddToCart(product);
-
+      const workshop = `${WEBINAR_NAME_2} GA + 5 ebooks bundle`;
       // Backup session data for Razorpay notes
       const sessionData = typeof window !== "undefined" 
         ? JSON.parse(sessionStorage.getItem("user_details") || "{}") 
@@ -150,6 +151,8 @@ export const OTOWatchPageGa = () => {
         notes: {
           ...savedData,
           ...utmParams,
+          workshop: workshop,
+          page_url: window.location.href,
         }
       });
 

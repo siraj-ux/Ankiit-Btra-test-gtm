@@ -6,7 +6,7 @@ import { User, Mail, Phone, MapPin, Loader2, Calendar, Users } from "lucide-reac
 import { useUTMParams, buildRazorpayURL } from "@/hooks/useUTMParams";
 // import { useFacebookPixel } from "@/hooks/useFacebookPixel";
 import { trackAddToCart, trackFormSubmit } from "@/utils/gtm";
-import { GA_PRODUCT1, GA_PRODUCT1_OTO, RAZORPAY_DESCRIPTION } from "@/utils/product-info";
+import { GA_PRODUCT1, GA_PRODUCT1_OTO, RAZORPAY_DESCRIPTION, WEBINAR_NAME_1 } from "@/utils/product-info";
 import { useRazorpay } from "@/hooks/useRazorpay";
 import { toast } from "@/components/ui/sonner";
 
@@ -139,7 +139,8 @@ export default function OtoPage() {
 
     await sendToGoogleSheets();
 
-    const product = upgrade499 ? GA_PRODUCT1_OTO : GA_PRODUCT1 ; // Using OTO product for both since price is dynamic
+    const product = upgrade499 ? GA_PRODUCT1_OTO : GA_PRODUCT1 ;// Using OTO product for both since price is dynamic
+    const workshopName = upgrade499 ? `${WEBINAR_NAME_1} GA + 5 Year Destiny Report` : `${WEBINAR_NAME_1} GA`;
     trackAddToCart(product)
         // Trigger Razorpay Popup
     const result = await initiatePayment({
@@ -155,6 +156,7 @@ export default function OtoPage() {
           ...formData,
           ...utmParams,
           page_url: window.location.href,
+          workshop: workshopName,
         }
       });
 
