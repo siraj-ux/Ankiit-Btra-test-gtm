@@ -21,6 +21,8 @@ interface Order {
 export const OG_PRICE = 99;
 export const DISCOUNTED_PRICE = 99;
 export const OTO_OG_PRICE = 499;
+export const OTO_DISCOUNTED_PRICE = 499;
+
 
 export const OG_PRICE_WATCH = 0;
 export const DISCOUNTED_PRICE_WATCH = 0;
@@ -114,7 +116,7 @@ export const GA_PRODUCT2_OTO: Product = {
     item_id : 'wrist_watch_workshop_ga_oto',
     item_name : `${WEBINAR_NAME_2} GA OTO`,
     item_category : 'Online Workshop',
-    price : OTO_OG_PRICE,
+    price : OTO_OG_PRICE_WATCH,
     quantity : 1,
     currency: CURRENCY,
 

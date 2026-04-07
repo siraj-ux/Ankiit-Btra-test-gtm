@@ -1,5 +1,6 @@
 import { Target, Sparkles, Zap } from 'lucide-react';
 import SubscribeButton from '@/components/SubscribeButton';
+import {  DISCOUNTED_PRICE, OTO_OG_PRICE, OTO_DISCOUNTED_PRICE } from '@/utils/product-info';
 
 const actions = [
   {
@@ -89,7 +90,7 @@ export const ActionStepsSection = ({ onCTAClick }: ActionStepsSectionProps) => {
                   shadow-lg
                   inline-block
                 "
-                label="Book Now @ ₹99"
+                label={`Book Now @ ₹${DISCOUNTED_PRICE}`}
               />
             </div>
 

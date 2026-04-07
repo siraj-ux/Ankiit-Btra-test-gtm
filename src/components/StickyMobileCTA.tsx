@@ -1,5 +1,6 @@
 import { CountdownTimer } from './CountdownTimer';
 import SubscribeButton from '@/components/SubscribeButton';
+import {  DISCOUNTED_PRICE, OTO_OG_PRICE, OTO_DISCOUNTED_PRICE } from '@/utils/product-info';
 
 interface StickyMobileCTAProps {
   onCTAClick: () => void;
@@ -37,7 +38,7 @@ export const StickyMobileCTA = ({ onCTAClick }: StickyMobileCTAProps) => {
             shadow-lg
             text-center
           "
-          label="Book @ ₹99"
+          label={`Book @ ₹${DISCOUNTED_PRICE}`}
         />
 
       </div>

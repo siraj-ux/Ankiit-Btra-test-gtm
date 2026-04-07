@@ -1,6 +1,7 @@
 import { CountdownTimer } from '@/components/CountdownTimer';
 import { Sparkles } from 'lucide-react';
 import SubscribeButton from '@/components/SubscribeButton';
+import {  DISCOUNTED_PRICE, OTO_OG_PRICE, OTO_DISCOUNTED_PRICE } from '@/utils/product-info';
 
 interface FinalCTASectionProps {
   onCTAClick: () => void;
@@ -78,7 +79,7 @@ export const FinalCTASection = ({ onCTAClick }: FinalCTASectionProps) => {
                 shadow-lg
                 flex items-center justify-center gap-2
               "
-              label="Book My Seat @ ₹99 →"
+              label={`Book My Seat @ ₹${DISCOUNTED_PRICE} →`}
             />
 
             {/* Footer Note */}

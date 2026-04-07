@@ -1,39 +1,37 @@
 import { CheckCircle, ArrowRight, Users, Clock } from 'lucide-react';
-
 import { useFacebookPixel } from "@/hooks/usePIxelWatch";
 import { useEffect } from 'react';
-
 import { trackPurchase } from "@/utils/gtm";
-import { ORDER, OTO_OG_PRICE, PRODUCT1_OTO } from '@/utils/product-info';
+import { ORDER, OTO_OG_PRICE_WATCH, PRODUCT2_OTO } from '@/utils/product-info';
 
 export const OTOThankYouPage = () => {
+  // ✅ FIX: Hooks must be called at the top level of the component
+  // useFacebookPixel({
+  //   eventName: "OTO_Watch_99",
+  //   eventParams: {
+  //     content_name: "OTO_Product",
+  //     content_category: "OTO",
+  //     value: 99,
+  //     currency: "INR",
+  //   },
+  // });
 
   useEffect(() => {
+    // Standard utility functions (non-hooks) can stay inside useEffect
     trackPurchase({
       ...ORDER,
-      value: OTO_OG_PRICE,
+      value: OTO_OG_PRICE_WATCH,
       items: [
-        {...PRODUCT1_OTO}
+        { ...PRODUCT2_OTO }
       ]
-    });
-
-    useFacebookPixel({
-      eventName: "OTO_Watch_99",
-      eventParams: {
-        content_name: "OTO_Product",
-        content_category: "OTO",
-        value: 99,
-        currency: "INR",
-      },
     });
   }, []);
 
   return (
     <section className="min-h-screen bg-[#0b0b0b] flex items-center justify-center px-4 text-white">
       <div className="w-full max-w-2xl">
-
         <div className="bg-[#121212] border border-[#d4af37]/30 rounded-2xl p-6 md:p-8 shadow-xl text-center">
-
+          
           {/* Success Icon */}
           <div className="flex justify-center mb-4">
             <div className="w-14 h-14 rounded-full bg-[#d4af37]/10 flex items-center justify-center">
@@ -56,14 +54,18 @@ export const OTOThankYouPage = () => {
             <ul className="space-y-3 text-sm text-white/80">
               <li className="flex items-start gap-2">
                 <Clock className="h-4 w-4 text-[#d4af37] mt-0.5" />
-                Payment verify hone ke baad saare ebooks
-                <span className="font-semibold"> WhatsApp / Email</span> par share kiye jaayenge.
+                <span>
+                  Payment verify hone ke baad saare ebooks
+                  <span className="font-semibold"> WhatsApp / Email</span> par share kiye jaayenge.
+                </span>
               </li>
 
               <li className="flex items-start gap-2">
                 <Users className="h-4 w-4 text-[#d4af37] mt-0.5" />
-                Updates aur guidance ke liye
-                <span className="font-semibold"> WhatsApp group join karna zaroori</span> hai.
+                <span>
+                  Updates aur guidance ke liye
+                  <span className="font-semibold"> WhatsApp group join karna zaroori</span> hai.
+                </span>
               </li>
             </ul>
           </div>

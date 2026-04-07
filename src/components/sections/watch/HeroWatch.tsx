@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Calendar, Clock, Globe, Video } from "lucide-react";
+import SubscribeButton from "../../SubscribeButton";
 
 /* 🔗 DATE & TIME CSV */
 const DATE_TIME_CSV =
@@ -85,13 +86,19 @@ export const HeroSectionWatch = () => {
 
     setLoading(true);
 
-    // Construct Query Parameters to pass data to OTO page
-    const query = new URLSearchParams({
+    // SAVE DATA TO SESSION STORAGE AS BACKUP
+    const userData = {
       full_name: form.name,
       email: form.email,
       phone: form.phone,
       profession: form.profession,
       age_range: form.age_range,
+    };
+    sessionStorage.setItem("user_details", JSON.stringify(userData));
+
+    // Construct Query Parameters to pass data to OTO page
+    const query = new URLSearchParams({
+      ...userData,
       utm_source: "facebook",
       utm_campaign: "wristwatch_workshop",
     }).toString();
@@ -164,13 +171,19 @@ export const HeroSectionWatch = () => {
                   <option value="freelancer">Freelancer / Self-Employed</option>
                   <option value="homemaker">Homemaker</option>
                 </Select>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full mt-4 bg-[#F4C063] hover:bg-[#eab14f] text-black font-bold py-4 rounded-xl text-lg transition disabled:opacity-60"
-                >
-                  {loading ? "Redirecting..." : "FREE Wristwatch Workshop"}
-                </button>
+                <SubscribeButton
+                  label={loading ? "Redirecting..." : "FREE Wristwatch Workshop"}
+                  ctaLocation="hero_section_watch"
+                  onClick={() => {
+                    if (!loading) {
+                      const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
+                      handleSubmit(fakeEvent);
+                    }
+                  }}
+                  className={`w-full mt-4 bg-[#F4C063] hover:bg-[#eab14f] text-black font-bold py-4 rounded-xl text-lg transition flex items-center justify-center ${
+                    loading ? "opacity-60 pointer-events-none" : ""
+                  }`}
+                />
               </form>
             </div>
             <div className="max-w-md text-left mt-6 space-y-4">

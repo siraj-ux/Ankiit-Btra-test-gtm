@@ -55,21 +55,21 @@ export default function OtoPage() {
   const [errors, setErrors] = useState<FormErrors>({});
 
   /* 🔥 FACEBOOK PIXEL TRACKING */
-  useFacebookPixel(
-    fireAddToCart
-      ? {
-          eventName: "AddToCart",
-          eventParams: {
-            content_name: formData.courseName,
-            content_category: upgrade499 ? "LP2_Offer_499" : "LP2_Offer_99",
-            content_ids: [upgrade499 ? "LP2_IN_499" : "LP2_IN_99"],
-            content_type: "product",
-            value: upgrade499 ? 499 : 99,
-            currency: "INR",
-          },
-        }
-      : undefined
-  );
+  // useFacebookPixel(
+  //   fireAddToCart
+  //     ? {
+  //         eventName: "AddToCart",
+  //         eventParams: {
+  //           content_name: formData.courseName,
+  //           content_category: upgrade499 ? "LP2_Offer_499" : "LP2_Offer_99",
+  //           content_ids: [upgrade499 ? "LP2_IN_499" : "LP2_IN_99"],
+  //           content_type: "product",
+  //           value: upgrade499 ? 499 : 99,
+  //           currency: "INR",
+  //         },
+  //       }
+  //     : undefined
+  // );
 
   /* ✅ UPDATE COURSE NAME DYNAMICALLY */
   useEffect(() => {

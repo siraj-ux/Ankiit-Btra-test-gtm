@@ -4,6 +4,9 @@ import { Calendar, Clock, Globe, Video, Star } from "lucide-react";
 import { ScrollZodiac } from "@/components/sections/ScrollZodiac";
 import { Link } from "react-router-dom";
 import SubscribeButton  from "@/components/SubscribeButton";
+import {  DISCOUNTED_PRICE, OTO_OG_PRICE, OTO_DISCOUNTED_PRICE } from '@/utils/product-info';
+
+
 /** ✅ Your published CSV url */
 const SHEET_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vSVeDQWx-YmpXyEWEDUd4QGndsnGwymqcMj7dzGqilpRng7oysfqqtPdhDJYavMzFuY-uCrDCkF-CwS/pub?gid=1706335492&single=true&output=csv";
@@ -244,8 +247,10 @@ export const HeroSection = () => {
                       duration-300
                       shadow-lg
                     " 
-                    label=" Reserve Your Seat @ ₹99"
+                    label={`Reserve Your Seat @ ${DISCOUNTED_PRICE}`}
+                     ctaLocation="hero-section"
                     />
+                    
                 </Link>
 
                 <div className="flex justify-center mt-4">

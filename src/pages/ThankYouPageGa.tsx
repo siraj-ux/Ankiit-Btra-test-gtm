@@ -7,19 +7,19 @@ import { DISCOUNTED_PRICE, GA_ORDER, GA_PRODUCT1 } from '@/utils/product-info';
 
 
 export const ThankYouPageGa = () => {
-    useFacebookPixel({
-    eventName: "Purchase NNW",
-    eventParams: {
-      content_name: "LP2_Product",
-      content_category: "LP2_Offer",
-      content_ids: ["LP2_IN_99"],
-      content_type: "product",
-      value: 99,
-      currency: "INR",
-    },
+  //   useFacebookPixel({
+  //   eventName: "Purchase NNW",
+  //   eventParams: {
+  //     content_name: "LP2_Product",
+  //     content_category: "LP2_Offer",
+  //     content_ids: ["LP2_IN_99"],
+  //     content_type: "product",
+  //     value: 99,
+  //     currency: "INR",
+  //   },
     
 
-  });
+  // });
 
   useEffect(() => {
       // 1. Get payment ID from URL

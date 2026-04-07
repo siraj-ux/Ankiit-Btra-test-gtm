@@ -1,5 +1,6 @@
 import { CheckCircle2 } from 'lucide-react';
 import SubscribeButton from "@/components/SubscribeButton";
+import {  DISCOUNTED_PRICE, OTO_OG_PRICE, OTO_DISCOUNTED_PRICE } from '@/utils/product-info';
 
 const audiences = [
   "You're a Business Owner struggling with unstable revenue",
@@ -57,7 +58,7 @@ export const WhoIsThisForSection = ({ onCTAClick }: WhoIsThisForSectionProps) =>
                 shadow-lg
                 inline-block
               "
-              label="Book Now @ ₹99"
+              label={`Book Now @ ₹${DISCOUNTED_PRICE}`}
             />
           </div>
 

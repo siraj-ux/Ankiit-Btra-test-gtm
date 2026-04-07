@@ -4,14 +4,14 @@ import { Input } from "@/components/ui/input";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { User, Mail, Phone, MapPin, Loader2, Calendar, Users } from "lucide-react";
 import { useUTMParams, buildRazorpayURL } from "@/hooks/useUTMParams";
-import { useFacebookPixel } from "@/hooks/useFacebookPixel";
+// import { useFacebookPixel } from "@/hooks/useFacebookPixel";
 import { trackAddToCart, trackFormSubmit } from "@/utils/gtm";
 import { GA_PRODUCT1, GA_PRODUCT1_OTO, RAZORPAY_DESCRIPTION } from "@/utils/product-info";
 import { useRazorpay } from "@/hooks/useRazorpay";
 import { toast } from "@/components/ui/sonner";
 
-const RAZORPAY_99_URL = "https://pages.razorpay.com/pl_S6ZxgWS0ZZvgE2/view";
-const RAZORPAY_499_URL = "https://pages.razorpay.com/pl_S6aRnHuQsmGTB4/view";
+// const RAZORPAY_99_URL = "https://pages.razorpay.com/pl_S6ZxgWS0ZZvgE2/view";
+// const RAZORPAY_499_URL = "https://pages.razorpay.com/pl_S6aRnHuQsmGTB4/view";
 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyNqQghsxa10pLaJKRryPO0fs0-02M4diS9pJ2RwZVisD0KeN5q97BZehzijb1LBKLlRQ/exec";
 
@@ -57,21 +57,21 @@ export default function OtoPage() {
   const {initiatePayment, loading, error} = useRazorpay();
   const [errors, setErrors] = useState<FormErrors>({});
 
-  useFacebookPixel(
-    fireAddToCart
-      ? {
-          eventName: "AddToCart",
-          eventParams: {
-            content_name: "LP2_Product",
-            content_category: upgrade499 ? "LP2_Offer_499" : "LP2_Offer_99",
-            content_ids: [upgrade499 ? "LP2_IN_499" : "LP2_IN_99"],
-            content_type: "product",
-            value: upgrade499 ? 499 : 99,
-            currency: "INR",
-          },
-        }
-      : undefined
-  );
+  // useFacebookPixel(
+  //   fireAddToCart
+  //     ? {
+  //         eventName: "AddToCart",
+  //         eventParams: {
+  //           content_name: "LP2_Product",
+  //           content_category: upgrade499 ? "LP2_Offer_499" : "LP2_Offer_99",
+  //           content_ids: [upgrade499 ? "LP2_IN_499" : "LP2_IN_99"],
+  //           content_type: "product",
+  //           value: upgrade499 ? 499 : 99,
+  //           currency: "INR",
+  //         },
+  //       }
+  //     : undefined
+  // );
 
   useEffect(() => {
     setFormData((prev) => ({
@@ -167,9 +167,9 @@ export default function OtoPage() {
 
       // Redirect to specific page based on price
       if (upgrade499) {
-        window.location.href = `/ty-oto-fb?${successParams.toString()}`;
+        window.location.href = `/ty-oto-ga?${successParams.toString()}`;
       } else {
-        window.location.href = `/ty-fb?${successParams.toString()}`;
+        window.location.href = `/ty-ga?${successParams.toString()}`;
       }
       
     } else {
