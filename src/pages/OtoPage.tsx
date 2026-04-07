@@ -130,7 +130,6 @@ export default function OtoPage() {
     if (!validateForm()) return;
 
     setIsSubmitting(true);
-    setFireAddToCart(true);
 
     trackFormSubmit({
       formData: {
@@ -290,22 +289,20 @@ export default function OtoPage() {
           )}
 
           {/* ACTION BUTTON */}
-          <AddToCartButton
+          <button
             type="submit"
             disabled={isSubmitting || razorpayLoading}
-            className="w-full h-14 text-lg font-bold shadow-lg bg-[#04343b] text-white rounded-xl hover:bg-[#064a54] transition-colors"
-            label={
-              (isSubmitting || razorpayLoading) ? (
-                <>
+            className="w-full h-14 text-lg font-bold shadow-lg bg-[#04343b] text-white rounded-xl hover:bg-[#064a54] transition-colors">
+              {(isSubmitting || razorpayLoading) ? (
+                <div className="flex items-center justify-center">
                   <Loader2 className="animate-spin mr-2" /> Processing…
-                </>
+                </div>
               ) : upgrade499 ? (
                 "Book My Seat @ ₹499"
               ) : (
                 "Book My Seat @ ₹99"
-              )
-            }
-          />
+              )}
+            </button>
           
           <p className="text-[10px] text-center text-gray-400 mt-2">
             Secure 256-bit SSL Encrypted Payment
