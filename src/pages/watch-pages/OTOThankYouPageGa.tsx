@@ -2,45 +2,42 @@ import { useEffect } from 'react';
 import { CheckCircle, ArrowRight, Users, Clock } from 'lucide-react';
 import { useFacebookPixel } from "@/hooks/usePIxelWatch";
 import { trackPurchase } from '@/utils/gtm';
-import { GA_PRODUCT2_OTO } from '@/utils/product-info';
+import { GA_ORDER, GA_PRODUCT2_OTO, OTO_OG_PRICE_WATCH } from '@/utils/product-info';
 
 const WHATSAPP_LINK = "https://hi.switchy.io/hiswitchywatch";
 
 export const OTOThankYouPageGa = () => {
-  // 1. Facebook Pixel Tracking for OTO Purchase
-  // useFacebookPixel({
-  //   eventName: "Purchase_OTO_Watch",
-  //   eventParams: {
-  //     content_name: GA_PRODUCT2_OTO.item_name,
-  //     content_category: "OTO_Upgrade",
-  //     content_ids: [GA_PRODUCT2_OTO.item_id],
-  //     content_type: "product",
-  //     value: GA_PRODUCT2_OTO.price,
-  //     currency: "INR",
-  //   },
-  // });
 
   useEffect(() => {
     // 2. Get payment ID from URL
     const params = new URLSearchParams(window.location.search);
     const paymentId = params.get("payment_id") || params.get("razorpay_payment_id");
+    const transactionId = params.get("transaction_id")
 
     if (paymentId) {
       // 3. Prevent duplicate tracking on page refresh
       const alreadyTracked = localStorage.getItem(`tracked_oto_${paymentId}`);
       if (alreadyTracked) return;
       
-      localStorage.setItem(`tracked_oto_${paymentId}`, "true");
+      
 
-      // 4. Fire GTM Purchase Event for OTO
       trackPurchase({
-        transaction_id: paymentId,
-        value: GA_PRODUCT2_OTO.price,
-        currency: "INR",
-        items: [
-          { ...GA_PRODUCT2_OTO }
-        ],
-      });
+            ...GA_ORDER,
+            value: OTO_OG_PRICE_WATCH,
+            items: [
+              {
+                item_id: GA_PRODUCT2_OTO.item_id,
+                item_name: GA_PRODUCT2_OTO.item_name,
+                item_category: GA_PRODUCT2_OTO.item_category,
+                price: GA_PRODUCT2_OTO.price,
+                quantity: 1,
+              }
+            ],
+            transaction_id: paymentId || transactionId, 
+            
+          });
+
+      localStorage.setItem(`tracked_oto_${paymentId}`, "true");
     }
   }, []);
 

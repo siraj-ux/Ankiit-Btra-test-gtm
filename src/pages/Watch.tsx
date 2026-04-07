@@ -15,8 +15,6 @@ import { StickyMobileCTA } from '@/components/sections/watch/StickyCta';
 const Watch = () => {
   const heroRef = useRef<HTMLDivElement>(null);
 
-useFacebookPixel()
-
  useEffect(() => {
     document.title = "Wristwatch Workshop | Ankiit Btra ";
   }, []);

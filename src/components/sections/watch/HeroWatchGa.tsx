@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Calendar, Clock, Globe, Video } from "lucide-react";
 import SubscribeButton from "../../SubscribeButton";
+import { GA_PRODUCT2, WEBINAR_NAME_2 } from "@/utils/product-info";
+import { getUTMParams, trackAddToCart, trackLead } from "@/utils/gtm";
 
 /* 🔗 DATE & TIME CSV */
 const DATE_TIME_CSV =
@@ -74,14 +76,18 @@ export const HeroSectionWatchGa = () => {
 
     try {
       setLoading(true);
+      trackLead(GA_PRODUCT2, form)
+      const transactionId = `${Date.now()}-${form.name.slice(0,5)}`;
 
       // 1. SAVE DATA TO SESSION STORAGE AS BACKUP
       const userData = {
+        transaction_id: transactionId,
         full_name: form.name,
         email: form.email,
         phone: form.phone,
         profession: form.profession,
         age_range: form.age_range,
+        workshop : `${WEBINAR_NAME_2} GA`,
       };
       sessionStorage.setItem("user_details", JSON.stringify(userData));
 
@@ -89,14 +95,11 @@ export const HeroSectionWatchGa = () => {
       // Note: Data is NOT sent to Apps Script from here. 
       // It is passed to OTO page which handles the submission.
       const query = new URLSearchParams({
-        full_name: form.name,
-        email: form.email,
-        phone: form.phone,
-        age_range: form.age_range,
-        profession: form.profession,
-        utm_source: "google_ads",
+        ...getUTMParams(),
+        transaction_id: transactionId,
       }).toString();
 
+      trackAddToCart(GA_PRODUCT2)
       window.location.href = `/oto-watch-ga?${query}`;
       
     } catch (error) {

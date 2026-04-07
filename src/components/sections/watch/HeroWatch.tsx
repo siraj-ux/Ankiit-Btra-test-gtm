@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Calendar, Clock, Globe, Video } from "lucide-react";
 import SubscribeButton from "../../SubscribeButton";
+import { getUTMParams, trackAddToCart, trackLead } from "@/utils/gtm";
+import { PRODUCT1, PRODUCT2, WEBINAR_NAME_2 } from "@/utils/product-info";
 
 /* 🔗 DATE & TIME CSV */
 const DATE_TIME_CSV =
@@ -85,24 +87,30 @@ export const HeroSectionWatch = () => {
     }
 
     setLoading(true);
-
+    trackLead(PRODUCT2, form)
+    const transactionId = `${Date.now()}-${form.name.slice(0,5)}`;
     // SAVE DATA TO SESSION STORAGE AS BACKUP
     const userData = {
+      transactionId: transactionId,
       full_name: form.name,
       email: form.email,
       phone: form.phone,
       profession: form.profession,
       age_range: form.age_range,
+      workshop: `${WEBINAR_NAME_2} FB`,
     };
     sessionStorage.setItem("user_details", JSON.stringify(userData));
 
     // Construct Query Parameters to pass data to OTO page
     const query = new URLSearchParams({
-      ...userData,
-      utm_source: "facebook",
-      utm_campaign: "wristwatch_workshop",
+      // utm_source: "facebook",
+      // utm_campaign: "wristwatch_workshop",
+      ...getUTMParams(),
+      transaction_id: transactionId,
     }).toString();
 
+
+    trackAddToCart(PRODUCT2)
     // Redirect to OTO Page (Data is sent to sheet from there)
     window.location.href = `/oto-watch-fb?${query}`;
   };

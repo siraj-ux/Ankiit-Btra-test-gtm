@@ -1,30 +1,36 @@
 import { CheckCircle, ArrowRight, Users, Clock } from 'lucide-react';
-import { useFacebookPixel } from "@/hooks/usePIxelWatch";
 import { useEffect } from 'react';
 import { trackPurchase } from "@/utils/gtm";
 import { ORDER, OTO_OG_PRICE_WATCH, PRODUCT2_OTO } from '@/utils/product-info';
 
 export const OTOThankYouPage = () => {
-  // ✅ FIX: Hooks must be called at the top level of the component
-  // useFacebookPixel({
-  //   eventName: "OTO_Watch_99",
-  //   eventParams: {
-  //     content_name: "OTO_Product",
-  //     content_category: "OTO",
-  //     value: 99,
-  //     currency: "INR",
-  //   },
-  // });
 
   useEffect(() => {
-    // Standard utility functions (non-hooks) can stay inside useEffect
+    const params = new URLSearchParams(window.location.search);
+    const paymentId = params.get("payment_id")
+    const transactionId = params.get("transaction_id")
+
+    if (paymentId) {
+      const alreadyTracked = localStorage.getItem(`tracked_${paymentId}`);
+    if (alreadyTracked) return;
+    }
     trackPurchase({
       ...ORDER,
       value: OTO_OG_PRICE_WATCH,
       items: [
-        { ...PRODUCT2_OTO }
-      ]
+        {
+          item_id: PRODUCT2_OTO.item_id,
+          item_name: PRODUCT2_OTO.item_name,
+          item_category: PRODUCT2_OTO.item_category,
+          price: PRODUCT2_OTO.price,
+          quantity: 1,
+        }
+      ],
+      transaction_id: paymentId || transactionId, 
+      
     });
+
+    localStorage.setItem(`tracked_${paymentId}`, "true");
   }, []);
 
   return (

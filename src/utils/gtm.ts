@@ -58,7 +58,6 @@ export const trackFormSubmit = ({formName, formData }: {formName: string, formDa
         lead_email: formData.email || '',
         ...getUTMParams(),
     })
-
 }
 
 export const trackFormError = ({formName, errorMessage } : {formName: string, errorMessage: string}) => {
@@ -77,6 +76,22 @@ export const trackSubscribe = ({label, ctaLocation}: {label: string, ctaLocation
             cta_location: ctaLocation,
             ...getUTMParams(),
         })
+}
+
+export const trackLead = (product: typeof PRODUCT, formData : Record<string, any> ) => {
+    pushEvent("lead", {
+        em: formData.email || '',
+        ph: formData.phone || '',
+        fn: formData.name || '',
+        items: [{
+            item_id: product.item_id,
+            item_name: product.item_name,
+            item_category: product.item_category,
+            price: product.price,
+            quantity: product.quantity || 1,
+        }],
+        ...getUTMParams(),
+    })
 }
 
 export const trackAddToCart = (product: typeof PRODUCT ) : void => {
