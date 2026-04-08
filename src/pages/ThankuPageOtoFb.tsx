@@ -1,23 +1,23 @@
 import { CheckCircle, ArrowRight, MessageCircle, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useEffect } from 'react'; // ✅ Added useEffect
-import { useFacebookPixel } from "@/hooks/useFacebookPixel";
+// import { useFacebookPixel } from "@/hooks/useFacebookPixel";
 import { trackPurchase } from "@/utils/gtm"; // ✅ Added GTM tracking
 import { ORDER, OTO_OG_PRICE, PRODUCT1_OTO } from "@/utils/product-info"; // ✅ Added Order info
 
 export const ThankYouPageOtoFb = () => {
-  /* 🔥 FACEBOOK PIXEL TRACKING (Value: 499) */
-  useFacebookPixel({
-    eventName: "Purchase",
-    eventParams: {
-      content_name: "LP2_OTO_Product",
-      content_category: "LP2_OTO",
-      content_ids: ["LP2_IN_OTO_199"],
-      content_type: "product",
-      value: 499,
-      currency: "INR",
-    },
-  });
+  // /* 🔥 FACEBOOK PIXEL TRACKING (Value: 499) */
+  // useFacebookPixel({
+  //   eventName: "Purchase",
+  //   eventParams: {
+  //     content_name: "LP2_OTO_Product",
+  //     content_category: "LP2_OTO",
+  //     content_ids: ["LP2_IN_OTO_199"],
+  //     content_type: "product",
+  //     value: 499,
+  //     currency: "INR",
+  //   },
+  // });
 
   /* ✅ GTM PURCHASE TRACKING (Value: 499) */
   useEffect(() => {

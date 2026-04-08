@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { CheckCircle, ArrowRight, Users, Clock } from 'lucide-react';
-import { useFacebookPixel } from "@/hooks/usePIxelWatch";
+// import { useFacebookPixel } from "@/hooks/usePIxelWatch";
 import { trackPurchase } from '@/utils/gtm';
 import { GA_ORDER, GA_PRODUCT2_OTO, OTO_OG_PRICE_WATCH } from '@/utils/product-info';
 
@@ -10,6 +10,7 @@ export const OTOThankYouPageGa = () => {
 
   useEffect(() => {
     // 2. Get payment ID from URL
+     document.title = "Wristwatch Workshop | Ankiit Btra ";
     const params = new URLSearchParams(window.location.search);
     const paymentId = params.get("payment_id") || params.get("razorpay_payment_id");
     const transactionId = params.get("transaction_id")

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { CheckCircle, ArrowRight, MessageCircle } from "lucide-react";
-import { useFacebookPixel } from "@/hooks/usePIxelWatch"; // Using the hook from your previous reference
+// import { useFacebookPixel } from "@/hooks/usePIxelWatch"; // Using the hook from your previous reference
 import { trackPurchase } from '@/utils/gtm';
 import { GA_PRODUCT2, DISCOUNTED_PRICE_WATCH } from '@/utils/product-info';
 
@@ -22,6 +22,9 @@ export const ThankuWatchGa = () => {
 
   useEffect(() => {
     // 2. Get payment/transaction ID from URL (or fallback)
+   
+    document.title = "Wristwatch Workshop | Ankiit Btra ";
+  
     const params = new URLSearchParams(window.location.search);
     const transactionId = params.get("payment_id") || params.get("razorpay_payment_id") || `free_${Date.now()}`;
 
