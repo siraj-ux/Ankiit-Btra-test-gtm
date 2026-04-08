@@ -178,32 +178,32 @@ export const OTOWatchPage = () => {
     </svg>
   );
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const paymentId = params.get("transaction_id");
+  // useEffect(() => {
+  //   const params = new URLSearchParams(window.location.search);
+  //   const paymentId = params.get("transaction_id");
 
-    if (paymentId) {
-      const alreadyTracked = localStorage.getItem(`tracked_${paymentId}`);
-    if (alreadyTracked) return;
-    }
+  //   if (paymentId) {
+  //     const alreadyTracked = localStorage.getItem(`tracked_${paymentId}`);
+  //   if (alreadyTracked) return;
+  //   }
 
-    trackPurchase({
-      ...ORDER,
-      value: PRODUCT2.price,
-      items: [
-        {
-          item_id: PRODUCT2.item_id,
-          item_name: PRODUCT2.item_name,
-          item_category: PRODUCT2.item_category,
-          price: PRODUCT2.price,
-          quantity: 1,
-        }
-      ],
-      transaction_id: paymentId
-    })
+  //   trackPurchase({
+  //     ...ORDER,
+  //     value: PRODUCT2.price,
+  //     items: [
+  //       {
+  //         item_id: PRODUCT2.item_id,
+  //         item_name: PRODUCT2.item_name,
+  //         item_category: PRODUCT2.item_category,
+  //         price: PRODUCT2.price,
+  //         quantity: 1,
+  //       }
+  //     ],
+  //     transaction_id: paymentId
+  //   })
 
-    localStorage.setItem(`tracked_${paymentId}`, "true");
-  }, [])
+  //   localStorage.setItem(`tracked_${paymentId}`, "true");
+  // }, [])
 
   return (
     <section className="min-h-screen bg-[#0b0b0b] py-10 md:py-20 text-white font-sans">

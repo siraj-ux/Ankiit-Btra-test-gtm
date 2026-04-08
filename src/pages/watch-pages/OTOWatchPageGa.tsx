@@ -183,32 +183,32 @@ export const OTOWatchPageGa = () => {
   );
 
 
-  useEffect(() => {
-      const params = new URLSearchParams(window.location.search);
-      const paymentId = params.get("transaction_id");
+  // useEffect(() => {
+  //     const params = new URLSearchParams(window.location.search);
+  //     const paymentId = params.get("transaction_id");
   
-      if (paymentId) {
-        const alreadyTracked = localStorage.getItem(`tracked_${paymentId}`);
-      if (alreadyTracked) return;
-      }
+  //     if (paymentId) {
+  //       const alreadyTracked = localStorage.getItem(`tracked_${paymentId}`);
+  //     if (alreadyTracked) return;
+  //     }
   
-      trackPurchase({
-        ...GA_ORDER,
-        value: GA_PRODUCT2.price,
-        items: [
-          {
-            item_id: GA_PRODUCT2.item_id,
-            item_name: GA_PRODUCT2.item_name,
-            item_category: GA_PRODUCT2.item_category,
-            price: GA_PRODUCT2.price,
-            quantity: 1,
-          }
-        ],
-        transaction_id: paymentId
-      })
+  //     trackPurchase({
+  //       ...GA_ORDER,
+  //       value: GA_PRODUCT2.price,
+  //       items: [
+  //         {
+  //           item_id: GA_PRODUCT2.item_id,
+  //           item_name: GA_PRODUCT2.item_name,
+  //           item_category: GA_PRODUCT2.item_category,
+  //           price: GA_PRODUCT2.price,
+  //           quantity: 1,
+  //         }
+  //       ],
+  //       transaction_id: paymentId
+  //     })
   
-      localStorage.setItem(`tracked_${paymentId}`, "true");
-    }, [])
+  //     localStorage.setItem(`tracked_${paymentId}`, "true");
+  //   }, [])
   
 
   return (
